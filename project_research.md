@@ -56,3 +56,12 @@ string*
 
 ➡️  This allows to differenciate between different clients when receiving
 multiple messages.
+
+ℹ️  Alternitevely, can just use PID as client identifier
+
+---
+
+## Specifications
+
+- max message length: 1024
+- max username length: 256
