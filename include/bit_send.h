@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_send.h                                     :+:      :+:    :+:   */
+/*   bit_send.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 20:07:39 by                   #+#    #+#             */
-/*   Updated: 2023/02/28 20:07:39 by                  ###   ########.fr       */
+/*   Created: 2023/02/28 20:21:34 by                   #+#    #+#             */
+/*   Updated: 2023/02/28 20:21:34 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MESSAGE_SEND_H
-# define MESSAGE_SEND_H
+#ifndef BIT_SEND_H
+# define BIT_SEND_H
 
 # include <unistd.h>
 # include "s_server.h"
 
-void	message_send(pid_t pid, t_s_server *server);
+void	bit_send(pid_t pid, t_s_server *server);
 
 #endif

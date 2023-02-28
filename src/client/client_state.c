@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_send.c                                     :+:      :+:    :+:   */
+/*   client_state.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 14:59:04 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 20:12:58 by emcnab           ###   ########.fr       */
+/*   Created: 2023/02/28 20:18:00 by emcnab            #+#    #+#             */
+/*   Updated: 2023/02/28 20:50:03 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_send.h"
+#include "client_state.h"
 
-#include "messages.h"
-#include "bit_to_sig.h"
+#include "client_message.h"
 #include "s_server.h"
-#include <stdint.h>
-#include <stdbool.h>
-#include <signal.h>
-#include <stdio.h>
+#include <unistd.h>
 
-/**
- * @brief Sends a message to another process, one bit at a time.
- *
- * @param pid (pid_t): PID of the process to send the message to.
- * @param server (t_s_server *): Server sending the message.
- */
-void	message_send(pid_t pid, t_s_server *server)
+typedef void				(*t_state_func)(pid_t, t_s_server *);
+
+static const t_state_func	g_states[E_STATE_SIZE] = {
+	NULL,
+	&client_message,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
+
+void	client_state(pid_t pid, t_s_server *client)
 {
-
+	g_states[client->state_current](pid, client);
 }

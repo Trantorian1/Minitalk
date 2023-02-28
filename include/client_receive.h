@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_send.h                                     :+:      :+:    :+:   */
+/*   client_receive.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 20:07:39 by                   #+#    #+#             */
-/*   Updated: 2023/02/28 20:07:39 by                  ###   ########.fr       */
+/*   Created: 2023/02/28 20:51:08 by                   #+#    #+#             */
+/*   Updated: 2023/02/28 20:51:08 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MESSAGE_SEND_H
-# define MESSAGE_SEND_H
+#ifndef CLIENT_RECEIVE_H
+# define CLIENT_RECEIVE_H
 
 # include <unistd.h>
 # include "s_server.h"
 
-void	message_send(pid_t pid, t_s_server *server);
+void	client_receive(pid_t pid, t_s_server *client);
 
 #endif

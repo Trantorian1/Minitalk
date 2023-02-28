@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_send.c                                     :+:      :+:    :+:   */
+/*   message_was_sent.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 14:59:04 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 20:12:58 by emcnab           ###   ########.fr       */
+/*   Created: 2023/02/28 20:56:02 by emcnab            #+#    #+#             */
+/*   Updated: 2023/02/28 20:58:31 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_send.h"
+#include "message_was_sent.h"
 
-#include "messages.h"
-#include "bit_to_sig.h"
-#include "s_server.h"
-#include <stdint.h>
+#include "libft.h"
 #include <stdbool.h>
-#include <signal.h>
-#include <stdio.h>
+#include <stddef.h>
 
-/**
- * @brief Sends a message to another process, one bit at a time.
- *
- * @param pid (pid_t): PID of the process to send the message to.
- * @param server (t_s_server *): Server sending the message.
- */
-void	message_send(pid_t pid, t_s_server *server)
+bool	message_was_sent(t_s_server *server)
 {
+	size_t	index;
+	size_t	target;
 
+	index = server->message_out.bit_count / 8;
+	target = ft_strlen(server->message_out.message);
+	return (index == target);
 }

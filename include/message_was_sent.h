@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_send.h                                     :+:      :+:    :+:   */
+/*   message_was_sent.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 20:07:39 by                   #+#    #+#             */
-/*   Updated: 2023/02/28 20:07:39 by                  ###   ########.fr       */
+/*   Created: 2023/02/28 20:56:42 by                   #+#    #+#             */
+/*   Updated: 2023/02/28 20:56:42 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MESSAGE_SEND_H
-# define MESSAGE_SEND_H
+#ifndef MESSAGE_WAS_SENT_H
+# define MESSAGE_WAS_SENT_H
 
-# include <unistd.h>
+# include <stdbool.h>
 # include "s_server.h"
 
-void	message_send(pid_t pid, t_s_server *server);
+bool	message_was_sent(t_s_server *server);
 
 #endif

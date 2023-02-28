@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_send.h                                     :+:      :+:    :+:   */
+/*   bit_receive.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 20:07:39 by                   #+#    #+#             */
-/*   Updated: 2023/02/28 20:07:39 by                  ###   ########.fr       */
+/*   Created: 2023/02/28 20:34:08 by                   #+#    #+#             */
+/*   Updated: 2023/02/28 20:34:08 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MESSAGE_SEND_H
-# define MESSAGE_SEND_H
+#ifndef BIT_RECEIVE_H
+# define BIT_RECEIVE_H
 
-# include <unistd.h>
+# include <stdbool.h>
 # include "s_server.h"
 
-void	message_send(pid_t pid, t_s_server *server);
+void	bit_receive(bool bit, t_s_server *server);
 
 #endif
