@@ -63,5 +63,25 @@ multiple messages.
 
 ## Specifications
 
-- max message length: 1024
-- max username length: 256
+- max message length: 2058
+- message buffer length: 256
+- max username length: 24
+
+## Project structure
+
+include
+ |-- ...
+ |
+src
+ |--server
+ |    |--Rakefile
+ |
+ |--client
+ |    |--Rakefile
+ |
+ |--comms
+ |    |-- ...
+ |
+ vendor
+ |--libft
+ |    |-- ...
