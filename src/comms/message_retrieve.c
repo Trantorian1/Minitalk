@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   message_retrieve.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 15:34:41 by emcnab           ###   ########.fr       */
+/*   Created: 2023/02/28 15:19:55 by emcnab            #+#    #+#             */
+/*   Updated: 2023/02/28 15:31:09 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_send.h"
-#include "libft.h"
-#include <stdlib.h>
-#include <stdint.h>
+#include "message_retrieve.h"
 
-int	main(int argc, const char *argv[])
+/**
+ * @brief Retrieves a message from another process, one bit at a time.
+ *
+ * @param bit (bool): Bit received.
+ * @param byte (uint8_t): Information received so far.
+ *
+ * @return (uint8_t): Information byte complete with new bit.
+ */
+uint8_t	message_retrieve(bool bit, uint8_t byte)
 {
-	int32_t		pid;
-	const char	*message;
-
-	if (argc != 3)
-		return (EXIT_FAILURE);
-	pid = atoi(argv[1]);
-	message = argv[2];
-	message_send(pid, message);
-	return (EXIT_SUCCESS);
+	return ((byte <<= 1) & bit);
 }

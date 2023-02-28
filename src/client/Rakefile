@@ -1,0 +1,127 @@
+require 'rake/clean'
+require 'rake/loaders/makefile'
+
+# The name of the binary to build.
+BINARY    = 'client'.freeze
+
+# ==============================================================================
+#                                    VARIABLES
+# ==============================================================================
+
+# Source directories.
+HDIR      = ['../../include/', '../../vendor/libft/'].freeze
+CDIRS     = ['../comms/', './'].freeze
+# Build directories.
+BUILD_DIR = '../../build/'.freeze
+ODIR      = "#{BUILD_DIR}objs/".freeze
+DDIR      = "#{BUILD_DIR}deps/".freeze
+
+# Compilation flags.
+CC        = 'clang'.freeze
+HFLAGS    = HDIR.collect { |dir| "-I #{dir}" }.join(" ")
+CFLAGS    = "-Wall -Wextra -Werror #{HFLAGS}"
+DFLAGS    = "#{HFLAGS} -M -MP -MM".freeze
+
+# Source files.
+SRC_DIRS  = CDIRS.collect { |item| "#{item}**/*.c" }
+SRC_FILES = Rake::FileList.new(SRC_DIRS) do |file|
+  file.exclude { |f| "git ls-files #{f}".empty? }
+end
+
+# Object files.
+__ofiles  = SRC_FILES
+CDIRS.each do |dir|
+  __ofiles = __ofiles.pathmap("%{^#{dir},#{ODIR}}X.o")
+end
+OFILES    = __ofiles
+
+# Dependency files.
+__dfiles  = SRC_FILES
+CDIRS.each do |dir|
+  __dfiles = __dfiles.pathmap("%{^#{dir},#{DDIR}}X.mf")
+end
+DFILES    = __dfiles
+
+# ==============================================================================
+#                                   DIRECTORIES
+# ==============================================================================
+
+# creates all required directories 
+directory BUILD_DIR
+directory ODIR
+directory DDIR
+
+# ==============================================================================
+#                                      RULES
+# ==============================================================================
+
+# By default, builds binary.
+task default: :binary
+
+# Displays debug info.
+task :debug do
+  puts ">> Sources"
+  puts SRC_FILES
+  puts ">> Objects"
+  puts OFILES
+  puts ">> Dependencies"
+  puts DFILES
+end
+
+# Builds the client binary.
+file binary: OFILES do
+  sh "#{CC} #{CFLAGS} #{OFILES} -o #{BINARY}"
+end
+
+# Compiles object files if the associated c file and object directory exist.
+rule ".o" => [->(f) { source_objs(f) }, ODIR] do |task|
+  sh "#{CC} #{CFLAGS} -c #{task.source} -o #{task.name}"
+end
+
+# Compiles dependency files if the associated c file and dependency directory
+# exist.
+rule ".mf" => [->(f) { source_deps(f) }, DDIR] do |task|
+  dir = task.name.pathmap('%d')
+  sh "mkdir #{dir}" unless Dir.exist? dir
+
+  cmd = "#{CC} #{DFLAGS} #{task.source} -MT #{task.source.ext('.o')}"
+  make_target = `#{cmd}`
+
+  open(task.name.to_s, 'w') do |file|
+    file.puts make_target.to_s
+    file.puts make_target.sub('.o:', '.mf:').to_s
+  end
+end
+
+# ==============================================================================
+#                                 HELPER FUNCTIONS
+# ==============================================================================
+
+# Determines the location of the c file associated to an object file.
+def source_objs(o_file)
+  SRC_FILES.detect do |c_file|
+    CDIRS.detect do |dir|
+      c_file.ext == o_file.ext.pathmap("%{^#{ODIR},#{dir}}X")
+    end
+  end
+end
+
+# Determines the location of the c file associated to a dependency file.
+def source_deps(d_file)
+  SRC_FILES.detect do |c_file|
+    CDIRS.detect do |dir|
+      c_file.ext == d_file.ext.pathmap("%{^#{DDIR},#{dir}}X")
+    end
+  end
+end
+
+# ==============================================================================
+#                               DEPENDENCY INCLUSION
+# ==============================================================================
+
+# Imports each dependency file, creating it if it does not exist.
+DFILES.each do |d_file|
+  file d_file
+  puts "importing #{d_file}"
+  import d_file
+end

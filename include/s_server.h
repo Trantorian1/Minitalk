@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   s_server.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 15:34:41 by emcnab           ###   ########.fr       */
+/*   Created: 2023/02/28 15:39:50 by emcnab            #+#    #+#             */
+/*   Updated: 2023/02/28 15:48:19 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_send.h"
-#include "libft.h"
-#include <stdlib.h>
-#include <stdint.h>
+#ifndef S_SERVER_H
+# define S_SERVER_H
 
-int	main(int argc, const char *argv[])
+# include <stdint.h>
+
+typedef struct s_server
 {
-	int32_t		pid;
-	const char	*message;
+	uint8_t	byte;
+	uint8_t	sig_count;
+}	t_s_server;
 
-	if (argc != 3)
-		return (EXIT_FAILURE);
-	pid = atoi(argv[1]);
-	message = argv[2];
-	message_send(pid, message);
-	return (EXIT_SUCCESS);
-}
+#endif

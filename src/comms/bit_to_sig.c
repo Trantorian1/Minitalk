@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   bit_to_sig.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 15:34:41 by emcnab           ###   ########.fr       */
+/*   Created: 2023/02/28 15:14:44 by emcnab            #+#    #+#             */
+/*   Updated: 2023/02/28 15:17:33 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_send.h"
-#include "libft.h"
-#include <stdlib.h>
-#include <stdint.h>
+#include "bit_to_sig.h"
 
-int	main(int argc, const char *argv[])
+#include "messages.h"
+#include <stdbool.h>
+
+int	bit_to_sig(bool bit)
 {
-	int32_t		pid;
-	const char	*message;
-
-	if (argc != 3)
-		return (EXIT_FAILURE);
-	pid = atoi(argv[1]);
-	message = argv[2];
-	message_send(pid, message);
-	return (EXIT_SUCCESS);
+	if (bit)
+		return (ONE);
+	else
+		return (0);
 }

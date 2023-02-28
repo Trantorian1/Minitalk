@@ -1,0 +1,12 @@
+./server.o: server.c ../../include/message_retrieve.h \
+  ../../include/s_server.h
+
+../../include/message_retrieve.h:
+
+../../include/s_server.h:
+./server.mf: server.c ../../include/message_retrieve.h \
+  ../../include/s_server.h
+
+../../include/message_retrieve.h:
+
+../../include/s_server.h:
