@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:09:20 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/01 16:50:03 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ int	main(int argc, char *argv[])
 	pid = atoi(argv[1]);
 	str = argv[2];
 	message_store(&g_client.message_out, &str);
+	printf("message to send is %s\n", g_client.message_out.buffer);
+	printf("-----\n");
 	signal(SIGUSR1, &signal_handle);
 	signal(SIGUSR2, &signal_handle);
 	client_state(pid, &g_client);
+	printf("-----\n");
 	while (!message_was_sent(&g_client))
 	{
 		if (g_client.signal_override)

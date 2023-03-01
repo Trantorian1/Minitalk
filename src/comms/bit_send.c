@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:20:51 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:08:00 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/01 17:12:16 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ void	bit_send(pid_t pid, t_s_server *server)
 	if (!server)
 		return ;
 	message = &server->message_out;
+	if (message->mask == 0)
+		message->mask = 0x80;
 	index = message->bit_count / 8;
 	bit = message->buffer[index] & message->mask;
 	message->mask >>= 1;
 	message->bit_count++;
+	printf("current character is %c\n", message->buffer[index]);
 	printf("sending bit %d to PID %d\n", bit, pid);
 	printf("sending mask is now %hhu\n", message->mask);
 	kill(pid, bit_to_sig(bit));

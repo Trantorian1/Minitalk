@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:29:27 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:22:19 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/01 16:46:16 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	bit_receive(bool bit, t_s_server *server)
 	if (!server)
 		return ;
 	message = &(server->message_in);
-	if (message->mask == 0x80)
-		message->mask = 0x00;
 	index = message->bit_count / 8;
 	message->buffer[index] <<= 1;
 	message->buffer[index] |= bit;

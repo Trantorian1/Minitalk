@@ -6,16 +6,18 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:34:56 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 15:43:13 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/01 17:04:13 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bit_receive.h"
 #include "bit_confirm.h"
+#include "message_was_received.h"
+#include "sig_to_bit.h"
+#include "message_last_byte.h"
 #include "messages.h"
 #include "s_server.h"
 #include "libft.h"
-#include "sig_to_bit.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
@@ -42,12 +44,12 @@ static void	signal_handler(int sig, siginfo_t *info, void *ptr)
 int	main(void)
 {
 	struct sigaction	act;
+	t_s_message			*message;
 
 	printf("PID: %d\n", getpid());
 	act.sa_sigaction = signal_handler;
 	act.sa_flags = SA_SIGINFO;
 	sigemptyset(&act.sa_mask);
-
 	if (sigaction(SIGUSR1, &act, NULL) == -1)
 	{
 		ft_free_all();
@@ -58,9 +60,10 @@ int	main(void)
 		ft_free_all();
 		exit(EXIT_FAILURE);
 	}
-
-	while (true)
+	message = &g_server.message_in;
+	while (!message_was_received(message))
 	{
 		pause();
 	}
+	printf("message: %s\n", message->buffer);
 }
