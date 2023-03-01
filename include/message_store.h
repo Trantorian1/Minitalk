@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_message.h                                        :+:      :+:    :+:   */
+/*   message_store.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 19:57:55 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:07:01 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/01 13:08:12 by                   #+#    #+#             */
+/*   Updated: 2023/03/01 13:08:12 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_MESSAGE_H
-# define S_MESSAGE_H
+#ifndef MESSAGE_STORE_H
+# define MESSAGE_STORE_H
 
-# include <stdint.h>
+# include "s_message.h"
 
-# define SIZE_BUFFER 256
-
-typedef struct s_message
-{
-	uint8_t		mask;
-	uint32_t	bit_count;
-	char		buffer[SIZE_BUFFER];
-}	t_s_message;
+void	message_store(t_s_message *message, char **str);
 
 #endif

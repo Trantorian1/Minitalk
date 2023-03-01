@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_message.h                                        :+:      :+:    :+:   */
+/*   bit_deny.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 19:57:55 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:07:01 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/01 10:16:18 by emcnab            #+#    #+#             */
+/*   Updated: 2023/03/01 10:17:08 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_MESSAGE_H
-# define S_MESSAGE_H
+#include "bit_deny.h"
 
-# include <stdint.h>
+#include "messages.h"
+#include <signal.h>
+#include <unistd.h>
 
-# define SIZE_BUFFER 256
-
-typedef struct s_message
+void	bit_deny(pid_t pid)
 {
-	uint8_t		mask;
-	uint32_t	bit_count;
-	char		buffer[SIZE_BUFFER];
-}	t_s_message;
-
-#endif
+	kill(pid, ZERO);
+}

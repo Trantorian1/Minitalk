@@ -2,6 +2,7 @@ require 'rake/clean'
 require 'rake/loaders/makefile'
 
 # The name of the binary to build.
+#include "bit_send.h"
 BINARY    = 'server'.freeze
 
 # ==============================================================================
@@ -16,10 +17,16 @@ BUILD_DIR = '../../build/'.freeze
 ODIR      = "#{BUILD_DIR}objs/".freeze
 DDIR      = "#{BUILD_DIR}deps/".freeze
 
+# Library info
+LIBHASH   = {
+  '../../vendor/libft/': 'ft'
+}.freeze
+LIBFLAGS  = LIBHASH.collect { |key, value| "-L#{key} -l#{value}" }.join(' ')
+
 # Compilation flags.
 CC        = 'clang'.freeze
 HFLAGS    = HDIR.collect { |dir| "-I #{dir}" }.join(" ")
-CFLAGS    = "-Wall -Wextra -Werror #{HFLAGS}"
+CFLAGS    = "-g -Wall -Wextra -Werror #{HFLAGS}"
 DFLAGS    = "#{HFLAGS} -M -MP -MM".freeze
 
 # Source files.
@@ -60,6 +67,10 @@ task default: :binary
 
 # Displays debug info.
 task :debug do
+  puts ">> Object Flags"
+  puts CFLAGS
+  puts ">> Binary Flags"
+  puts "#{CFLAGS} #{LIBFLAGS}"
   puts ">> Sources"
   puts SRC_FILES
   puts ">> Objects"
@@ -70,7 +81,7 @@ end
 
 # Builds the server binary.
 file binary: OFILES do
-  sh "#{CC} #{CFLAGS} #{OFILES} -o #{BINARY}"
+  sh "#{CC} #{CFLAGS} #{OFILES} -o #{BINARY} #{LIBFLAGS}"
 end
 
 # Compiles object files if the associated c file and object directory exist.

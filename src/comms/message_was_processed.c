@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_message.c                                   :+:      :+:    :+:   */
+/*   message_was_processed.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 20:19:22 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 20:41:57 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/01 13:13:34 by emcnab            #+#    #+#             */
+/*   Updated: 2023/03/01 13:15:20 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client_message.h"
+#include "message_was_processed.h"
 
-#include "e_state.h"
-#include "bit_send.h"
-#include <stdbool.h>
+#include <stddef.h>
 
-void	client_message(pid_t pid, t_s_server *client)
+bool	message_was_processed(t_s_message *message)
 {
-	bit_send(pid, client);
+	size_t	index;
+
+	index = message->bit_count / 8;
+	return (index == SIZE_BUFFER || message->buffer[index] == '\0');
 }

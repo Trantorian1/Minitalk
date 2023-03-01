@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_message.h                                        :+:      :+:    :+:   */
+/*   client_message_send.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 19:57:55 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:07:01 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/01 15:59:35 by                   #+#    #+#             */
+/*   Updated: 2023/03/01 15:59:35 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_MESSAGE_H
-# define S_MESSAGE_H
+#ifndef CLIENT_MESSAGE_SEND_H
+# define CLIENT_MESSAGE_SEND_H
 
-# include <stdint.h>
+# include <unistd.h>
+# include "s_server.h"
 
-# define SIZE_BUFFER 256
-
-typedef struct s_message
-{
-	uint8_t		mask;
-	uint32_t	bit_count;
-	char		buffer[SIZE_BUFFER];
-}	t_s_message;
+void	client_message_send(pid_t pid, t_s_server *client);
 
 #endif

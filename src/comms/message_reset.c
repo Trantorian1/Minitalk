@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_message.h                                        :+:      :+:    :+:   */
+/*   message_reset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 19:57:55 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:07:01 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/01 13:11:14 by emcnab            #+#    #+#             */
+/*   Updated: 2023/03/01 13:12:40 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_MESSAGE_H
-# define S_MESSAGE_H
+#include "message_reset.h"
+#include <stdint.h>
 
-# include <stdint.h>
-
-# define SIZE_BUFFER 256
-
-typedef struct s_message
+void	message_reset(t_s_message *message)
 {
-	uint8_t		mask;
-	uint32_t	bit_count;
-	char		buffer[SIZE_BUFFER];
-}	t_s_message;
-
-#endif
+	message->mask = (int8_t)0x80;
+	message->bit_count = 0;
+}

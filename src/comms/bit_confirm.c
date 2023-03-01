@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_send.c                                     :+:      :+:    :+:   */
+/*   bit_confirm.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 14:59:04 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 20:12:58 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/01 10:14:31 by emcnab            #+#    #+#             */
+/*   Updated: 2023/03/01 15:38:55 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_send.h"
+#include "bit_confirm.h"
 
 #include "messages.h"
-#include "bit_to_sig.h"
-#include "s_server.h"
-#include <stdint.h>
-#include <stdbool.h>
 #include <signal.h>
 #include <stdio.h>
+#include <unistd.h>
 
-/**
- * @brief Sends a message to another process, one bit at a time.
- *
- * @param pid (pid_t): PID of the process to send the message to.
- * @param server (t_s_server *): Server sending the message.
- */
-void	message_send(pid_t pid, t_s_server *server)
+void	bit_confirm(pid_t pid)
 {
-
+	kill(pid, ONE);
+	printf("confimed message\n");
 }

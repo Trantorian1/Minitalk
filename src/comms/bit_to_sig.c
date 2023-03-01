@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:14:44 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 15:17:33 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/01 14:37:18 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ int	bit_to_sig(bool bit)
 	if (bit)
 		return (ONE);
 	else
-		return (0);
+		return (ZERO);
 }

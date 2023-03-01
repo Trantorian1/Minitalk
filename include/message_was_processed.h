@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_message.h                                        :+:      :+:    :+:   */
+/*   message_was_processed.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 19:57:55 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:07:01 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/01 13:13:56 by                   #+#    #+#             */
+/*   Updated: 2023/03/01 13:13:56 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_MESSAGE_H
-# define S_MESSAGE_H
+#ifndef MESSAGE_WAS_PROCESSED_H
+# define MESSAGE_WAS_PROCESSED_H
 
-# include <stdint.h>
+# include <stdbool.h>
+# include "s_message.h"
 
-# define SIZE_BUFFER 256
-
-typedef struct s_message
-{
-	uint8_t		mask;
-	uint32_t	bit_count;
-	char		buffer[SIZE_BUFFER];
-}	t_s_message;
+bool	message_was_processed(t_s_message *message);
 
 #endif
