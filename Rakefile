@@ -1,4 +1,5 @@
 require 'rake/clean'
+require 'rake/loaders/makefile'
 require 'pathname'
 
 SRC_DIR    = './src'
@@ -59,11 +60,30 @@ rule '.o' => [->(f) { source_objs(f) }, OBJ_DIR] do |task|
   sh "#{CC} #{CFLAGS} -c #{task.source} -o #{task.name}"
 end
 
+rule ".mf" => [->(f) { source_deps(f) }, DEP_DIR] do |task|
+  cmd = "#{CC} #{DFLAGS} #{task.source} -MT #{task.source.ext('.o')}"
+  make_target = `#{cmd}`
+
+  open(task.name.to_s, 'w') do |file|
+    file.puts make_target.to_s
+    file.puts make_target.sub('.o:', '.mf:').to_s
+  end
+end
+
 # Determines the location of the c file associated to an object file.
 def source_objs(o_file)
   SRC_FILES.detect do |c_file|
     SUB_DIRS.detect do |dir|
       c_file.pathmap('%X') == o_file.pathmap("#{dir}/%n")
+    end
+  end
+end
+
+# Determines the location of the c file associated to a dependency file.
+def source_deps(d_file)
+  SRC_FILES.detect do |c_file|
+    SUB_DIRS.detect do |dir|
+      c_file.pathmap('%X') == d_file.pathmap("#{dir}/%n")
     end
   end
 end
@@ -88,4 +108,11 @@ task :debug do
   puts '>> DEPENDENCY FILES'
   puts DEP_FILES
   puts '-------------------' 
+end
+
+# Imports each dependency file, creating it if it does not exist.
+DEP_FILES.each do |d_file|
+  file d_file
+  puts "importing #{d_file}"
+  import d_file
 end
