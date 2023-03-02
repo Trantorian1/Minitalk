@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:18:00 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:00:15 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 13:58:02 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static const t_state_func	g_states[E_STATE_SIZE] = {
 	&do_nothing,
 	&client_message_send,
 	&client_message_receive,
+	&do_nothing,
 	&do_nothing,
 	&do_nothing,
 	&do_nothing,

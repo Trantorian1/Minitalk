@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_message.h                                        :+:      :+:    :+:   */
+/*   message_full.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 19:57:55 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 14:12:54 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/02 14:00:57 by                   #+#    #+#             */
+/*   Updated: 2023/03/02 14:00:57 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_MESSAGE_H
-# define S_MESSAGE_H
+#ifndef MESSAGE_FULL_H
+# define MESSAGE_FULL_H
 
-# include <stddef.h>
-# include <stdint.h>
+# include <stdbool.h>
+# include "s_message.h"
 
-# define SIZE_BUFFER 1024
-
-typedef struct s_message
-{
-	uint8_t		mask;
-	size_t		bit_count;
-	char		buffer[SIZE_BUFFER];
-	char		*str_full;
-}	t_s_message;
+bool	message_full(t_s_message *message);
 
 #endif

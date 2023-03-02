@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_was_received.c                             :+:      :+:    :+:   */
+/*   message_full.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 16:33:53 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 15:11:01 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/02 14:00:10 by emcnab            #+#    #+#             */
+/*   Updated: 2023/03/02 16:39:39 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_was_received.h"
+#include "message_full.h"
 
-#include "message_last_byte.h"
 #include "libft.h"
-#include <stddef.h>
-#include <stdio.h>
 #include <unistd.h>
 
-bool	message_was_received(t_s_message *message)
+bool	message_full(t_s_message *message)
 {
-	size_t	bit_count;
-	bool	is_valid_bit_count;
-
-	bit_count = message->bit_count;
-	is_valid_bit_count = ((bit_count > 0) && (bit_count % 8 == 0));
-	return (is_valid_bit_count && *message_last_byte(message) == '\0');
+	return (message->bit_count / 8 >= SIZE_BUFFER);
 }

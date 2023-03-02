@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 11:11:50 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 11:54:57 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 14:25:04 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "do_nothing.h"
 #include "server_message_send.h"
+#include "server_message_store.h"
 #include "server_message_display.h"
 
 typedef void				(*t_state_func)(pid_t, t_s_server *);
@@ -22,6 +23,7 @@ static const t_state_func	g_states[E_STATE_SIZE] = {
 	&do_nothing,
 	&server_message_send,
 	&do_nothing,
+	&server_message_store,
 	&server_message_display,
 	&do_nothing,
 	&do_nothing,

@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 10:45:18 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 16:38:19 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ int	main(int argc, char *argv[])
 	message_store(&g_client.message_out, &str);
 	signal(SIGUSR1, &signal_handle);
 	signal(SIGUSR2, &signal_handle);
-	while (!message_was_sent(&g_client))
+	while (!message_was_sent(&g_client) || *str != '\0')
 	{
 		if (g_client.state_lock)
 			continue ;
 		client_state(pid, &g_client);
+		if (message_was_sent(&g_client) && *str != '\0')
+			message_store(&g_client.message_out, &str);
 	}
 	return (EXIT_SUCCESS);
 }
