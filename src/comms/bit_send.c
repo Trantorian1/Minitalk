@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:20:51 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 17:12:16 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 11:10:12 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "bit_to_sig.h"
 #include "e_state.h"
+#include "state_set.h"
 #include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -34,10 +35,6 @@ void	bit_send(pid_t pid, t_s_server *server)
 	bit = message->buffer[index] & message->mask;
 	message->mask >>= 1;
 	message->bit_count++;
-	printf("current character is %c\n", message->buffer[index]);
-	printf("sending bit %d to PID %d\n", bit, pid);
-	printf("sending mask is now %hhu\n", message->mask);
 	kill(pid, bit_to_sig(bit));
-	server->state_previous = server->state_current;
-	server->state_current = MESSAGE_WAIT;
+	state_set(server, MESSAGE_WAIT);
 }

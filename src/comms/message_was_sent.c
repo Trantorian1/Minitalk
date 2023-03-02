@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:56:02 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:12:36 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 11:07:44 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
 
 bool	message_was_sent(t_s_server *server)
 {

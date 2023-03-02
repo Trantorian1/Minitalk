@@ -6,12 +6,13 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:34:56 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 17:04:13 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:50:38 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bit_receive.h"
 #include "bit_confirm.h"
+#include "e_state.h"
 #include "message_was_received.h"
 #include "sig_to_bit.h"
 #include "message_last_byte.h"
@@ -25,10 +26,9 @@
 #include <stdint.h>
 
 t_s_server	g_server = {
-	.sig_count = 0,
-	.signal_override = false,
-	.state_current = MESSAGE_SEND,
-	.state_previous = MESSAGE_SEND,
+	.state_lock = false,
+	.state_current = MESSAGE_WAIT,
+	.state_previous = MESSAGE_WAIT,
 	.message_out = {.bit_count = 0, .buffer = ""},
 	.message_in = {.bit_count = 0, .buffer = ""}
 };
@@ -36,7 +36,6 @@ t_s_server	g_server = {
 static void	signal_handler(int sig, siginfo_t *info, void *ptr)
 {
 	(void)ptr;
-	printf("received bit %d from PID %d\n", sig_to_bit(sig), info->si_pid);
 	bit_receive(sig_to_bit(sig), &g_server);
 	bit_confirm(info->si_pid);
 }

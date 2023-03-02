@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:14:31 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 15:38:55 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:22:19 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,4 @@
 void	bit_confirm(pid_t pid)
 {
 	kill(pid, ONE);
-	printf("confimed message\n");
 }

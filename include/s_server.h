@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:39:50 by emcnab            #+#    #+#             */
-/*   Updated: 2023/02/28 20:28:17 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:36:25 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 
 typedef struct s_server
 {
-	uint8_t		sig_count;
-	bool		signal_override;
+	bool		state_lock;
 	t_e_state	state_current;
 	t_e_state	state_previous;
 	t_s_message	message_out;

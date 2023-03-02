@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_message_send.c                              :+:      :+:    :+:   */
+/*   state_restore.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 15:58:41 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 10:38:35 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/02 10:33:58 by emcnab            #+#    #+#             */
+/*   Updated: 2023/03/02 10:35:06 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client_message_send.h"
+#include "state_restore.h"
+#include "e_state.h"
 
-#include "bit_send.h"
-
-void	client_message_send(pid_t pid, t_s_server *client)
+void	state_restore(t_s_server *server)
 {
-	bit_send(pid, client);
-	client->state_lock = true;
+	t_e_state	tmp;
+
+	tmp = server->state_current;
+	server->state_current = server->state_previous;
+	server->state_previous = tmp;
 }

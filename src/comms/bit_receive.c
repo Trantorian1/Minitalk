@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:29:27 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/01 16:46:16 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:20:53 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ void	bit_receive(bool bit, t_s_server *server)
 	message->buffer[index] <<= 1;
 	message->buffer[index] |= bit;
 	message->bit_count++;
-	printf("stored bit %d, message is now %d\n", bit, message->buffer[index]);
 	if (message->bit_count % 8 == 1)
 		message->mask = 0x01;
 	else
 		message->mask <<= 1;
-	printf("receiving mask is now %hhu\n", message->mask);
 }
