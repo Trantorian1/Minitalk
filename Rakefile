@@ -34,6 +34,12 @@ CC         = 'clang'
 CFLAGS     = "-Wall -Wextra -Werror #{HFLAGS}"
 DFLAGS     = "#{HFLAGS} -M -MP -MM"
 
+DEBUG_FLAGS = '-g -fsanitize=address'
+
+# ==============================================================================
+#                                     FILES
+# ==============================================================================
+
 # Source files
 SRC_FILES    = Rake::FileList.new("#{SRC_DIR}/**/*.c") do |file|
   file.exclude { |f| "git ls-files #{f}".empty? }
@@ -51,14 +57,32 @@ SERVER_FILES = SRC_FILES.clone
                         .exclude("#{CLIENT_DIR}/**/*.c")
                         .pathmap("#{OBJ_DIR}/%n.o")
 
+
+# ==============================================================================
+#                                  DEBUG FILES
+# ==============================================================================
+
+OBJ_FILES_DEBUG = SRC_FILES.pathmap("#{OBJ_DIR}/debug/%n.o")
+DEP_FILES_DEBUG = SRC_FILES.pathmap("#{DEP_DIR}/debug/%n.mf")
+
+# Files used to compile client
+CLIENT_FILES_DEBUG = SRC_FILES.clone
+                        .exclude("#{SERVER_DIR}/**/*.c")
+                        .pathmap("#{OBJ_DIR}/debug/%n.o")
+# Files used to compile server
+SERVER_FILES_DEBUG = SRC_FILES.clone
+                        .exclude("#{CLIENT_DIR}/**/*.c")
+                        .pathmap("#{OBJ_DIR}/debug/%n.o")
+
 # Files to remove with clean and clobber
-CLEAN.include(OBJ_FILES)
-CLOBBER.include("#{BIN_DIR}/*")
+CLEAN.include(OBJ_FILES, OBJ_FILES_DEBUG)
+CLOBBER.include("#{BIN_DIR}/*", "#{BIN_DIR}/debug/*")
 
 # ==============================================================================
 #                                   DIRECTORIES
 # ==============================================================================
 
+# Default directories
 directory OBJ_DIR
 directory DEP_DIR
 
@@ -66,8 +90,11 @@ directory DEP_DIR
 #                                      RULES
 # ==============================================================================
 
-# By default, build client and server
-task default: [:client, :server]
+# By default, builds binaries
+task default: :build
+
+# Builds client and server
+task build: [:client, :server]
 
 # Builds the client if all object files have been compiled
 file client: OBJ_FILES do
@@ -78,6 +105,40 @@ end
 file server: OBJ_FILES do
   sh "#{CC} #{CFLAGS} #{SERVER_FILES} -o #{BIN_DIR}/server #{LIBFLAGS}"
 end
+
+# ==============================================================================
+#                                  DEBUG RULES
+# ==============================================================================
+
+# Compiles with debug options
+task :debug do
+  # Adds debug options to C flags
+  CFLAGS << ' ' << DEBUG_FLAGS
+
+  # Updates compilation directories
+  BIN_DIR << '/debug'
+  OBJ_DIR << '/debug'
+  DEP_DIR << '/debug'
+
+  # Calls build task
+  Rake::Task[:build_debug].invoke
+end
+
+task build_debug: [:client_debug, :server_debug]
+
+# Builds the client if all object files have been compiled
+file client_debug: OBJ_FILES_DEBUG do
+  sh "#{CC} #{CFLAGS} #{CLIENT_FILES_DEBUG} -o #{BIN_DIR}/client #{LIBFLAGS}"
+end
+
+# Builds the server if all object files have been compiled
+file server_debug: OBJ_FILES_DEBUG do
+  sh "#{CC} #{CFLAGS} #{SERVER_FILES_DEBUG} -o #{BIN_DIR}/server #{LIBFLAGS}"
+end
+
+# ==============================================================================
+#                               DEPENDENCY RULES
+# ==============================================================================
 
 # Builds an objet file if the corresponding C files exists
 rule '.o' => [->(f) { source_objs(f) }, OBJ_DIR] do |task|
@@ -96,7 +157,7 @@ rule ".mf" => [->(f) { source_deps(f) }, DEP_DIR] do |task|
 end
 
 # Displays debug information
-task :debug do
+task :info do
   puts '-------------------' 
   puts '>> SUBDIRECTORIES'
   puts SUB_DIRS
