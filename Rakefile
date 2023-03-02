@@ -211,3 +211,9 @@ DEP_FILES.each do |d_file|
   puts "importing #{d_file}"
   import d_file
 end
+
+DEP_FILES_DEBUG.each do |d_file|
+  file d_file
+  puts "importing #{d_file}"
+  import d_file
+end
