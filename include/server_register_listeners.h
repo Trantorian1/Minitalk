@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_message_send.c                              :+:      :+:    :+:   */
+/*   server_register_listeners.h                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 15:58:41 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 13:23:54 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/02 11:43:13 by                   #+#    #+#             */
+/*   Updated: 2023/03/02 11:44:54 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client_message_send.h"
+#ifndef SERVER_REGISTER_LISTENERS_H
+# define SERVER_REGISTER_LISTENERS_H
 
-#include "bit_send.h"
+# include <stdbool.h>
+# include <signal.h>
 
-void	client_message_send(pid_t pid, t_s_server *client)
-{
-	client->state_lock = true;
-	bit_send(pid, client);
-}
+typedef void	(*t_f_handler)(pid_t pid, siginfo_t *info, void *ptr);
+
+bool	server_register_listeners(t_f_handler handler);
+
+#endif

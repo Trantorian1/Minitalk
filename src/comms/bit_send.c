@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:20:51 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 11:10:12 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 13:23:39 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	bit_send(pid_t pid, t_s_server *server)
 	bit = message->buffer[index] & message->mask;
 	message->mask >>= 1;
 	message->bit_count++;
-	kill(pid, bit_to_sig(bit));
 	state_set(server, MESSAGE_WAIT);
+	kill(pid, bit_to_sig(bit));
 }

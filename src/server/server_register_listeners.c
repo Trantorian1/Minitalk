@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_was_received.c                             :+:      :+:    :+:   */
+/*   server_register_listeners.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 16:33:53 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 11:34:51 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/02 11:40:15 by emcnab            #+#    #+#             */
+/*   Updated: 2023/03/02 11:47:11 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "message_was_received.h"
+#include "server_register_listeners.h"
 
-#include "message_last_byte.h"
-#include <stddef.h>
-#include <stdio.h>
+#include <stdlib.h>
 
-bool	message_was_received(t_s_message *message)
+bool	server_register_listeners(t_f_handler handler)
 {
-	size_t	bit_count;
-	bool	is_valid_bit_count;
+	struct sigaction	act;
 
-	bit_count = message->bit_count;
-	is_valid_bit_count = ((bit_count > 0) && (bit_count % 8 == 0));
-	return (is_valid_bit_count && *message_last_byte(message) == '\0');
+	act.sa_sigaction = handler;
+	act.sa_flags = SA_SIGINFO;
+	sigemptyset(&act.sa_mask);
+	if (sigaction(SIGUSR1, &act, NULL) == -1)
+		return (false);
+	if (sigaction(SIGUSR2, &act, NULL) == -1)
+		return (false);
+	return (true);
 }

@@ -6,18 +6,17 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:34:56 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 10:50:38 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 13:24:38 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bit_receive.h"
-#include "bit_confirm.h"
-#include "e_state.h"
-#include "message_was_received.h"
+#include "server_register_listeners.h"
+#include "server_state.h"
+#include "state_set.h"
 #include "sig_to_bit.h"
-#include "message_last_byte.h"
-#include "messages.h"
-#include "s_server.h"
+#include "bit_receive.h"
+#include "message_was_received.h"
+#include "e_state.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -26,7 +25,8 @@
 #include <stdint.h>
 
 t_s_server	g_server = {
-	.state_lock = false,
+	.sender = 0,
+	.state_lock = true,
 	.state_current = MESSAGE_WAIT,
 	.state_previous = MESSAGE_WAIT,
 	.message_out = {.bit_count = 0, .buffer = ""},
@@ -37,32 +37,27 @@ static void	signal_handler(int sig, siginfo_t *info, void *ptr)
 {
 	(void)ptr;
 	bit_receive(sig_to_bit(sig), &g_server);
-	bit_confirm(info->si_pid);
+	g_server.sender = info->si_pid;
+	if (message_was_received(&g_server.message_in))
+		state_set(&g_server, DISPLAY);
+	else
+		state_set(&g_server, MESSAGE_SEND);
+	g_server.state_lock = false;
 }
 
 int	main(void)
 {
-	struct sigaction	act;
-	t_s_message			*message;
-
 	printf("PID: %d\n", getpid());
-	act.sa_sigaction = signal_handler;
-	act.sa_flags = SA_SIGINFO;
-	sigemptyset(&act.sa_mask);
-	if (sigaction(SIGUSR1, &act, NULL) == -1)
+	if (!server_register_listeners(&signal_handler))
 	{
 		ft_free_all();
 		exit(EXIT_FAILURE);
 	}
-	if (sigaction(SIGUSR2, &act, NULL) == -1)
+	while (true)
 	{
-		ft_free_all();
-		exit(EXIT_FAILURE);
+		if (g_server.state_lock)
+			continue ;
+		server_state(g_server.sender, &g_server);
 	}
-	message = &g_server.message_in;
-	while (!message_was_received(message))
-	{
-		pause();
-	}
-	printf("message: %s\n", message->buffer);
+	return (EXIT_SUCCESS);
 }

@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_message_send.c                              :+:      :+:    :+:   */
+/*   server_message_send.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 15:58:41 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 13:23:54 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/02 11:14:39 by                   #+#    #+#             */
+/*   Updated: 2023/03/02 11:14:39 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client_message_send.h"
+#ifndef SERVER_MESSAGE_SEND_H
+# define SERVER_MESSAGE_SEND_H
 
-#include "bit_send.h"
+# include <unistd.h>
+# include "s_server.h"
 
-void	client_message_send(pid_t pid, t_s_server *client)
-{
-	client->state_lock = true;
-	bit_send(pid, client);
-}
+void	server_message_send(pid_t pid, t_s_server *server);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:39:50 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 10:36:25 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 11:21:45 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct s_server
 {
+	int			sender;
 	bool		state_lock;
 	t_e_state	state_current;
 	t_e_state	state_previous;
