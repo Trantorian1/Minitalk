@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 16:38:19 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/02 21:01:49 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	pid = atoi(argv[1]);
 	str = argv[2];
+	if (pid == -1)
+	{
+		ft_free_all();
+		exit(EXIT_FAILURE);
+	}
 	message_store(&g_client.message_out, &str);
 	signal(SIGUSR1, &signal_handle);
 	signal(SIGUSR2, &signal_handle);
