@@ -41,7 +41,7 @@ DEBUG_FLAGS = '-g -fsanitize=address'
 # ==============================================================================
 
 # Source files
-SRC_FILES    = Rake::FileList.new("#{SRC_DIR}/**/*.c") do |file|
+SRC_FILES = Rake::FileList.new("#{SRC_DIR}/**/*.c") do |file|
   file.exclude { |f| "git ls-files #{f}".empty? }
 end
 
@@ -57,7 +57,6 @@ SERVER_FILES = SRC_FILES.clone
                         .exclude("#{CLIENT_DIR}/**/*.c")
                         .pathmap("#{OBJ_DIR}/%n.o")
 
-
 # ==============================================================================
 #                                  DEBUG FILES
 # ==============================================================================
@@ -67,12 +66,12 @@ DEP_FILES_DEBUG = SRC_FILES.pathmap("#{DEP_DIR}/debug/%n.mf")
 
 # Files used to compile client
 CLIENT_FILES_DEBUG = SRC_FILES.clone
-                        .exclude("#{SERVER_DIR}/**/*.c")
-                        .pathmap("#{OBJ_DIR}/debug/%n.o")
+                              .exclude("#{SERVER_DIR}/**/*.c")
+                              .pathmap("#{OBJ_DIR}/debug/%n.o")
 # Files used to compile server
 SERVER_FILES_DEBUG = SRC_FILES.clone
-                        .exclude("#{CLIENT_DIR}/**/*.c")
-                        .pathmap("#{OBJ_DIR}/debug/%n.o")
+                              .exclude("#{CLIENT_DIR}/**/*.c")
+                              .pathmap("#{OBJ_DIR}/debug/%n.o")
 
 # Files to remove with clean and clobber
 CLEAN.include(OBJ_FILES, OBJ_FILES_DEBUG)
@@ -146,7 +145,7 @@ rule '.o' => [->(f) { source_objs(f) }, OBJ_DIR] do |task|
 end
 
 # Builds a dependency file if the corresponding C files exists
-rule ".mf" => [->(f) { source_deps(f) }, DEP_DIR] do |task|
+rule '.mf' => [->(f) { source_deps(f) }, DEP_DIR] do |task|
   cmd = "#{CC} #{DFLAGS} #{task.source} -MT #{task.source.ext('.o')}"
   make_target = `#{cmd}`
 
@@ -158,25 +157,25 @@ end
 
 # Displays debug information
 task :info do
-  puts '-------------------' 
+  puts '-------------------'
   puts '>> SUBDIRECTORIES'
   puts SUB_DIRS
-  puts '-------------------' 
+  puts '-------------------'
   puts '>> SOURCE FILES'
   puts SRC_FILES
-  puts '-------------------' 
+  puts '-------------------'
   puts '>> CLIENT FILES'
   puts CLIENT_FILES
-  puts '-------------------' 
+  puts '-------------------'
   puts '>> SERVER FILES'
   puts SERVER_FILES
-  puts '-------------------' 
+  puts '-------------------'
   puts '>> OBJECT FILES'
   puts OBJ_FILES
-  puts '-------------------' 
+  puts '-------------------'
   puts '>> DEPENDENCY FILES'
   puts DEP_FILES
-  puts '-------------------' 
+  puts '-------------------'
 end
 
 # ==============================================================================
