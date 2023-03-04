@@ -6,11 +6,13 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:34:56 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 17:08:37 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:17:04 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "bit_deny.h"
 #include "server_register_listeners.h"
+#include "server_is_occupied.h"
 #include "server_state.h"
 #include "state_set.h"
 #include "sig_to_bit.h"
@@ -27,7 +29,7 @@
 #include <stdint.h>
 
 t_s_server	g_server = {
-	.sender = 0,
+	.sender = -1,
 	.state_lock = true,
 	.state_current = MESSAGE_WAIT,
 	.state_previous = MESSAGE_WAIT,
@@ -40,6 +42,11 @@ static void	signal_handler(int sig, siginfo_t *info, void *ptr)
 	t_s_message	*message;
 
 	(void)ptr;
+	if (server_is_occupied(&g_server, info->si_pid))
+	{
+		bit_deny(info->si_pid);
+		return ;
+	}
 	message = &g_server.message_in;
 	bit_receive(sig_to_bit(sig), &g_server);
 	g_server.sender = info->si_pid;

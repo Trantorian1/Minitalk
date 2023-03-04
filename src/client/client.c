@@ -6,10 +6,11 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 21:01:49 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:16:32 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sig_to_bit.h"
 #include "bit_receive.h"
 #include "client_state.h"
 #include "message_send.h"
@@ -36,7 +37,7 @@ t_s_server	g_client = {
 
 static void	signal_handle(int signal)
 {
-	bit_receive(signal, &g_client);
+	bit_receive(sig_to_bit(signal), &g_client);
 	g_client.state_lock = false;
 }
 

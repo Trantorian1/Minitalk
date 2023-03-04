@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 11:50:43 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 16:40:07 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:01:03 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	server_message_display(pid_t pid, t_s_server *server)
 	}
 	message_reset(&server->message_in);
 	state_set(server, MESSAGE_WAIT);
+	server->sender = -1;
 	server->state_lock = true;
 }
