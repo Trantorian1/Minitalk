@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:20:51 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 13:23:39 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:02:58 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,27 @@
 #include <stdint.h>
 #include <stdio.h>
 
-void	bit_send(pid_t pid, t_s_server *server)
+/**
+ * @brief Sends the next bit in a message to a server.
+ *
+ * @param receiver (pid_t): The PID of the server receiving the message.
+ * @param sender (t_s_server *): the server sending the message.
+ */
+void	bit_send(pid_t receiver, t_s_server *sender)
 {
 	t_s_message	*message;
 	size_t		index;
 	bool		bit;
 
-	if (!server)
+	if (!sender)
 		return ;
-	message = &server->message_out;
+	message = &sender->message_out;
 	if (message->mask == 0)
 		message->mask = 0x80;
 	index = message->bit_count / 8;
 	bit = message->buffer[index] & message->mask;
 	message->mask >>= 1;
 	message->bit_count++;
-	state_set(server, MESSAGE_WAIT);
-	kill(pid, bit_to_sig(bit));
+	state_set(sender, MESSAGE_WAIT);
+	kill(receiver, bit_to_sig(bit));
 }

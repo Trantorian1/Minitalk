@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:39:50 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 11:21:45 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:00:40 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 # include <stdint.h>
 # include <stdbool.h>
 
+/**
+ * @brief A server responsible for sending and receiving data.
+ *
+ * Communication is done through Unix signal SIGUSR1 and SIGUSR2, where SIGUSR1
+ * is equivalent to a 0 bit and SIGUSR2 is equivalent to a 1 bit. Messaging is
+ * done 1 bit at a time, until the entire message has beent transferred and
+ * received. To avoid pinging a server while it is still occupied handling a
+ * signal, each message is followed by a confirmation ping from the receiver.
+ */
 typedef struct s_server
 {
 	int			sender;

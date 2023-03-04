@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:29:27 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 20:54:27 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:04:26 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,20 @@
 #include <stdint.h>
 #include <stdio.h>
 
-void	bit_receive(bool bit, t_s_server *server)
+/**
+ * @brief Receives a bit from a server.
+ *
+ * @param bit (bool): Bit being received.
+ * @param receiver (t_s_server *): Server receiving the bit.
+ */
+void	bit_receive(bool bit, t_s_server *receiver)
 {
 	t_s_message	*message;
 	size_t		index;
 
-	if (!server)
+	if (!receiver)
 		return ;
-	message = &(server->message_in);
+	message = &(receiver->message_in);
 	if (message_full(message))
 		message_reset(message);
 	index = message->bit_count / 8;

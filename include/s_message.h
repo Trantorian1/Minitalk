@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:57:55 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/02 14:12:54 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:08:07 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 
 # define SIZE_BUFFER 1024
 
+/**
+ * @brief Message buffer containing a collection of bits.
+ *
+ * Can either be used to stored bits received or bits to send.
+ */
 typedef struct s_message
 {
 	uint8_t		mask;
