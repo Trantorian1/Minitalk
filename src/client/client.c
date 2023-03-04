@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:29 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/04 13:16:32 by eliot            ###   ########.fr       */
+/*   Updated: 2023/03/04 13:56:00 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@
 #include <signal.h>
 #include <unistd.h>
 
+/**
+ * @brief Singleton client instance, responsible for sending messages to a
+ * server.
+ *
+ * Client is implemented as a state machine, with 2 main states:
+ * - MESSAGE_SEND: sends current message bit to server and waits for
+ *   confirmation (default state).
+ * - MESSAGE_RECEIVE: receives ping from server. If reception was sucessful,
+ *   sends next bit, otherwise exits program. This occurs whenever the server is
+ *   busy with another request and cannot process a new message at this time.
+ */
 t_s_server	g_client = {
 	.state_lock = false,
 	.state_current = MESSAGE_SEND,
@@ -41,6 +52,12 @@ static void	signal_handle(int signal)
 	g_client.state_lock = false;
 }
 
+/**
+ * @brief Main client event loop, handles client setup and state machine.
+ * 
+ * @warning Client will keep running until messasge is send or server denies
+ * connection, and should not bw interrupted in the mean time.
+ */
 int	main(int argc, char *argv[])
 {
 	int32_t		pid;
