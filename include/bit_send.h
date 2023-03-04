@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 20:21:34 by                   #+#    #+#             */
-/*   Updated: 2023/02/28 20:21:34 by                  ###   ########.fr       */
+/*   Created: 2023/03/04 14:12:02 by                   #+#    #+#             */
+/*   Updated: 2023/03/04 14:12:02 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include <unistd.h>
 # include "s_server.h"
 
-void	bit_send(pid_t pid, t_s_server *server);
+void	bit_send(pid_t receiver, t_s_server *sender);
 
 #endif

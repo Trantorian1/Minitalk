@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 11:43:13 by                   #+#    #+#             */
-/*   Updated: 2023/03/02 11:44:54 by emcnab           ###   ########.fr       */
+/*   Created: 2023/03/04 14:12:02 by                   #+#    #+#             */
+/*   Updated: 2023/03/04 14:15:33 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define SERVER_REGISTER_LISTENERS_H
 
 # include <stdbool.h>
-# include <signal.h>
-
-typedef void	(*t_f_handler)(pid_t pid, siginfo_t *info, void *ptr);
+# include "s_server.h"
 
 bool	server_register_listeners(t_f_handler handler);
 

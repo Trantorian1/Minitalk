@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_store.h                                    :+:      :+:    :+:   */
+/*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MESSAGE_STORE_H
-# define MESSAGE_STORE_H
+#ifndef SERVER_H
+# define SERVER_H
 
-# include "s_message.h"
-
-void	message_store(t_s_message *message, char **str);
+int	main(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:39:50 by emcnab            #+#    #+#             */
-/*   Updated: 2023/03/04 14:00:40 by eliot            ###   ########.fr       */
+/*   Updated: 2023/03/04 14:16:55 by eliot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "s_message.h"
 # include <stdint.h>
 # include <stdbool.h>
+#include <unistd.h>
 
 /**
  * @brief A server responsible for sending and receiving data.
@@ -36,5 +37,7 @@ typedef struct s_server
 	t_s_message	message_out;
 	t_s_message	message_in;
 }	t_s_server;
+
+typedef void	(*t_f_handler)(pid_t, siginfo_t *, void *);
 
 #endif

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 11:42:22 by                   #+#    #+#             */
-/*   Updated: 2023/03/01 11:42:22 by                  ###   ########.fr       */
+/*   Created: 2023/03/04 14:12:02 by                   #+#    #+#             */
+/*   Updated: 2023/03/04 14:12:02 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include <stdbool.h>
 # include "s_server.h"
 
-void	bit_receive(bool bit, t_s_server *server);
+void	bit_receive(bool bit, t_s_server *receiver);
 
 #endif
